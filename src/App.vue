@@ -1,12 +1,25 @@
 <script setup lang="ts">
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
+import { ref, watch } from 'vue';
+import { useRouter } from 'vue-router';
+
+const activeTab = ref("HomeIndex");
+
+const router = useRouter();
+
+function changeRoute(newRoute: string)
+{
+  router.push({name: newRoute});
+} 
+
+watch(activeTab, changeRoute)
 </script>
 
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+  <o-tabs v-model="activeTab">
+    <o-tab-item label="Accueil" value="HomeIndex" />
+    <o-tab-item label="Utilisateurs" value="UsersIndex" />
+  </o-tabs>
+  <router-view />
 </template>
 
 <style>
