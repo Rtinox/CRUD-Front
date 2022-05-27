@@ -16,6 +16,19 @@ export default [
             {
                 path: ":id",
                 name: "UsersView",
+                props: true,
+                component: View
+            },
+            {
+                path: ":id/edit",
+                name: "UsersEdit",
+                props: true,
+                component: View
+            },
+            {
+                path: "create",
+                name: "UsersCreate",
+                props: true,
                 component: View
             }
         ]
