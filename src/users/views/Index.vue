@@ -38,15 +38,24 @@ import { ref } from "vue";
 import Store from "../models/UsersStore"
 import { useDelete } from "../../core/delete";
 
+/**
+ * Les données sont-elles en train d'être récupéré ?
+ */
 const loading = ref(false);
 
+/**
+ * Données des utilisateurs
+ */
 const data = ref([]);
 
+/**
+ * Récupération des données depuis l'api
+ */
 function loadData() {
   loading.value = true;
+  
   Store.retrieve()
     .then(json => {
-      console.log(json)
       data.value = json;
     })
     .finally(() => {
@@ -55,5 +64,8 @@ function loadData() {
 }
 loadData();
 
+/**
+ * Import du composable de suppression
+ */
 const { deleteData } = useDelete(Store, loadData);
 </script>

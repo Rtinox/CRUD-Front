@@ -1,17 +1,3 @@
-<script lang="ts" setup>
-  const props = defineProps({
-    canEdit: {
-      type: Boolean,
-      required: false,
-      default: true
-    },
-    data: {
-      type: Object,
-      required: true
-    }
-  })
-</script>
-
 <template>
   <o-field label="Nom" horizontal>
     <o-input :disabled="!canEdit" v-model="data.name" />
@@ -29,3 +15,23 @@
     <o-input type="textarea" :disabled="!canEdit" v-model="data.description" />
   </o-field>
 </template>
+
+<script lang="ts" setup>
+  const props = defineProps({
+    /**
+     * Le formulaire peut-il être modifié ?
+     */
+    canEdit: {
+      type: Boolean,
+      required: false,
+      default: true
+    },
+    /**
+     * Données par défaut et modifié par le formulaire
+     */
+    data: {
+      type: Object,
+      required: true
+    }
+  })
+</script>

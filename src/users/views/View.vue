@@ -21,18 +21,35 @@ import Form from "../components/Form.vue"
 import { useDelete } from "../../core/delete";
 import { computed } from "@vue/reactivity";
 
+/**
+ * Page de création, modification et lecture de l'utilisateur
+ */
+
 const props = defineProps({
+    /**
+     * L'id de l'utilisateur à lire/modifier
+     * Pas d'id si on le créer
+     */
     id: {
         type: String,
         required: false,
     },
 })
 
+/**
+ * Import de route et router de VueJS
+ */
 const route = useRoute();
 const router = useRouter();
 
+/**
+ * Peut éditer si la route n'est pas la lecture de l'utilisateur
+ */
 const canEdit = computed(() => route.name !== "UsersView");
 
+/**
+ * Données d'un utilisateur de base
+ */
 const data = ref({
     name: "",
     first_name: "",
@@ -40,6 +57,9 @@ const data = ref({
     description: ""
 });
 
+/** 
+ * Récupération des données de l'utilisateur si l'id est donné (Pas en mode création)
+ */
 function loadData() {
     if (props.id) {
         Store.read(props.id).then((json => {
@@ -48,11 +68,18 @@ function loadData() {
     }
 }
 
-if(props.id) loadData();
+loadData();
 
+/**
+ * Lors de la validation du formulaire
+ * @param e 
+ */
 function onSubmit(e: any) {
     e.preventDefault();
 
+    /**
+     * Si c'est l'édition d'un utilisateur
+     */
     if (props.id) {
         Store.update(props.id, data.value).then(r => r.json())
             .then(json => {
@@ -61,6 +88,9 @@ function onSubmit(e: any) {
             })
     }
     else {
+        /**
+         * Si c'est la création d'un utilisateur
+         */
         Store.create(data.value)
             .then(r => r.json())
             .then(json => {
@@ -70,6 +100,9 @@ function onSubmit(e: any) {
     }
 }
 
+/**
+ * Import du composable de suppressiosn
+ */
 const { deleteData } = useDelete(Store, () => { router.push({ name: "UsersIndex" }) })
 
 </script>
