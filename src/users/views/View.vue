@@ -1,11 +1,15 @@
 <template>
     <form @submit="onSubmit">
         <Form :canEdit="canEdit" :data="data" />
-        <o-button v-if="canEdit" native-type="submit" tag="input" variant="primary" />
-        <div v-else>
+        
+        <o-button @click="$router.go(-1);">Retour</o-button>
+        <span v-if="canEdit">
+            <o-button native-type="submit" tag="input" variant="primary" />
+        </span>
+        <span v-else>
             <o-button @click="$router.push({ name: 'UsersEdit', params: { id: id } })">Modifier</o-button>
-            <o-button @click="deleteData(id)">Supprimer</o-button>
-        </div>
+            <o-button variant="danger" @click="deleteData(id)">Supprimer</o-button>
+        </span>
     </form>
 </template>
 
@@ -60,7 +64,7 @@ function onSubmit(e: any) {
         Store.create(data.value)
             .then(r => r.json())
             .then(json => {
-                router.push({ name: "UsersView", params: { id: json._id } });
+                router.replace({ name: "UsersView", params: { id: json._id } });
                 loadData();
             })
     }
