@@ -82,7 +82,7 @@ function onSubmit(e: any) {
      */
     if (props.id) {
         Store.update(props.id, data.value).then(r => {
-                if(r) r.json()
+                if(r) return r.json()
             })
             .then((json: any) => {
                 router.push({ name: "UsersView", params: { id: json._id } });
@@ -95,7 +95,7 @@ function onSubmit(e: any) {
          */
         Store.create(data.value)
             .then(r => {
-                if(r) r.json()
+                if(r) return r.json()
             })
             .then((json: any) => {
                 router.replace({ name: "UsersView", params: { id: json._id } });
