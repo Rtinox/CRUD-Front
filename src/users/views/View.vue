@@ -85,7 +85,7 @@ function onSubmit(e: any) {
                 if(r) return r.json()
             })
             .then((json: any) => {
-                router.push({ name: "UsersView", params: { id: json._id } });
+                router.replace({ name: "UsersView", params: { id: json._id } });
                 loadData();
             })
     }
