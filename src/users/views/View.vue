@@ -81,8 +81,10 @@ function onSubmit(e: any) {
      * Si c'est l'édition d'un utilisateur
      */
     if (props.id) {
-        Store.update(props.id, data.value).then(r => r.json())
-            .then(json => {
+        Store.update(props.id, data.value).then(r => {
+                if(r) r.json()
+            })
+            .then((json: any) => {
                 router.push({ name: "UsersView", params: { id: json._id } });
                 loadData();
             })
@@ -92,8 +94,10 @@ function onSubmit(e: any) {
          * Si c'est la création d'un utilisateur
          */
         Store.create(data.value)
-            .then(r => r.json())
-            .then(json => {
+            .then(r => {
+                if(r) r.json()
+            })
+            .then((json: any) => {
                 router.replace({ name: "UsersView", params: { id: json._id } });
                 loadData();
             })
